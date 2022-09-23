@@ -21,14 +21,21 @@
   outputs = inputs:
     let
       nixlib = inputs.nixlib.outputs.lib;
+      nixpkgs_ = forAllSystems (system: import inputs.nixpkgs { inherit system; });
       supportedSystems = [
         "x86_64-linux"
       ];
       forAllSystems = nixlib.genAttrs supportedSystems;
     in rec {
       devShells = forAllSystems (system: rec {
-        working = (import ./stable-diff-working.nix { nixpkgs = inputs.nixpkgs; inherit system; });
-        default = (import ./stable-diffusion.nix { nixpkgs = inputs.nixpkgs; inherit system; });
+        webui = (import ./stable-diffusion-webui.nix { nixpkgs = inputs.nixpkgs; inherit system; });
+        webui-pip = (import ./stable-diffusion-webui-pip.nix { nixpkgs = inputs.nixpkgs; inherit system; });
+        default = nixpkgs_.${system}.mkShell {
+          name = "stable-diffusion-flake";
+          nativeBuildInputs = with nixpkgs_."${system}"; [
+            nixUnstable git
+          ];
+        };
       });
       
       # TODO: nixlib should have a function for this:

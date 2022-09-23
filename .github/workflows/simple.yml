@@ -1,0 +1,24 @@
+name: "simple"
+on:
+  push:
+  schedule:
+    - cron: '*/10 * * * *'
+
+concurrency: simple
+jobs:
+  "simple-update":
+    runs-on: ubuntu-latest
+    concurrency: simple-${{matrix.jobs.branch}}-${{matrix.jobs.target}}
+    steps:
+    - { "uses": "actions/checkout@v3", "with": { "ref": "main" } }
+    - uses: "cachix/install-nix-action@v17"
+    - uses: "cachix/cachix-action@v10"
+      with:
+        name: "stable-diff"
+        signingKey: "${{ secrets.CACHIX_SIGNING_KEY }}"
+    # - name: devshell-cache
+    #   uses: ./.github/actions/devshell-cache
+    #   with:
+    #     sopsAgeKey: "${{ secrets.SOPS_AGE_KEY }}"
+    - name: "update"
+      run: nix develop -c ./ci.sh

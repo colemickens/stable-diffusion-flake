@@ -21,7 +21,7 @@
 **Still a WIP** - There is a working mode, but it relies on venv/pip-installing a bunch of crap.
 Ideally we can package the rest and remove the hacks and etc.
 
-Both the worth hacky version (`stable-diff-working.nix`) and devlopment-ideal version (`stable-diffusion.nix`) are documented here:
+Both the worth hacky version (`stable-diffusion-webui-pip.nix`) and devlopment-ideal version (`stable-diffusion-webui.nix`) are documented here:
 
 ## notes
 - warn: pytorch takes forever to build, you might want to use the cache defined in the flake!
@@ -52,10 +52,10 @@ git clone "https://github.com/sd-webui/stable-diffusion-webui" "${HOME}/code/sta
 
 # enter the SD-WEBUI directory
 # this assume you've already moved the model into place too!
-cd "${HOME}/code/stable-diffusion/webui"
+cd "${HOME}/code/stable-diffusion-webui"
 
 # enter a shell
-> nix develop 'github:colemickens/stable-diffusion-nix#working'
+> nix develop 'github:colemickens/stable-diffusion-flake#webui-pip'
 
 ## inside devshell, pip will install a bunch of extra stuff
 ## inside devshell, now launch the webui relauncher:
@@ -68,13 +68,13 @@ $ python scripts/relauncher.py
 ## developer usage
 ```shell
 # enter a shell
-> nix develop "$HOME/code/stable-diffusion-flake#default" \
+> nix develop "$HOME/code/stable-diffusion-flake#webui-pip" \
   --override-input "nixpkgs" "$HOME/code/nixpkgs/stable-diff"
 ```
 
 ## future usage
 ```shell
-nix run "github.com:colemickens/stable-diffusion#webui"
+nix run "github.com:colemickens/stable-diffusion-flake#webui"
 # (first-time) accept suggested cache / trusted-keys
 # wait...
 # and now UI is running on port 7860

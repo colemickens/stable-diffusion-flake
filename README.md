@@ -23,6 +23,8 @@ Ideally we can package the rest and remove the hacks and etc.
 
 Both the worth hacky version (`stable-diffusion-webui-pip.nix`) and devlopment-ideal version (`stable-diffusion-webui.nix`) are documented here:
 
+NOTE: This works with [AUTOMATIC1111/stable-diffusion-webui](https://github.com/AUTOMATIC1111/stable-diffusion-webui) as well
+
 ## notes
 - warn: pytorch takes forever to build, you might want to use the cache defined in the flake!
 - warn: this uses [my `nixpkgs` branch "`stable-diff`"](https://github.com/colemickens/nixpkgs/commits/stable-diff)

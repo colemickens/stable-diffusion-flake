@@ -1,5 +1,9 @@
 # stable-diffusion-flake
 
+## status
+
+on-hold, I'm a bit stretched too thin right now
+
 <img src="./README.md.ai-snowflake.png" width="50" />
 
 <!--toc:start-->
